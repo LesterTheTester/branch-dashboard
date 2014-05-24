@@ -1,0 +1,30 @@
+<head>
+  <title>branch-dashboard</title>
+</head>
+
+<body>
+</body>
+
+<template name="home">
+  <h2>Branches</h2>
+  {{> branches}}
+</template>
+
+<template name="branches">
+  {{#each branches}}
+    <div class="branch branch-{{branchName}}">
+    <h3>{{branchName}}</h3>
+    <span>{{branchStatus.commitHash}}</span>
+    </div>
+  {{/each}}
+</template>
+
+<template name="one">
+  <a href="/two">Two</a>
+  <a href="/three">Three</a>
+  <a href="/asset.txt">Asset</a>
+</template>
+
+<template name="two">
+  <a href="/">One</a>
+</template>

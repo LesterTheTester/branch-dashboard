@@ -100,13 +100,24 @@ Router.map(function() {
       var response = this.response;
       var requestData = this.request.body;
 
+      //console.log('request', request);
+      //console.log('response', response);
+
       var branchName = this.params.branchName;
 
       response.writeHead(200, {'Content-Type': 'text/html'});
 
-      Branches.upsert({branchName: branchName}, {$set: requestData});
-
-      response.end('updated:' + branchName);
+      if (request.method === 'POST') {
+        Branches.upsert({branchName: branchName}, {$set: requestData});
+        response.end('updated:' + branchName);
+      } else if (request.method === 'DELETE') {
+	if (_.indexOf(['master', 'develop'], branchName) === -1) {
+          Branches.remove({branchName: branchName});
+          response.end('deleted:' + branchName);
+        } else {
+          response.end('failure:' + branchName + ' protected');
+        }
+      }
     }
   });
 })
@@ -115,7 +126,8 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
   });
-  
+ 
+  /* 
   Branches.find({}).observe({
     added: function(newBranch) {
       //console.log('added', newBranch);
@@ -125,6 +137,7 @@ if (Meteor.isServer) {
       //Branches.findOne({_id: id}).setBranchStatus;
     }
   });
+  */
 }
 
 if (Meteor.isClient) {
@@ -149,7 +162,6 @@ if (Meteor.isClient) {
         }
       });
       return unknownShit.sort();
-
     },
     failures: function() {
       var branch = this;

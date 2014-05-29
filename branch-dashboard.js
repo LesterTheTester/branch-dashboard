@@ -1,5 +1,4 @@
 Router.configure({
-  debug: true,
   before: function() {
     //console.log('Before All')
   }

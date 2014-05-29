@@ -17,8 +17,8 @@ function Branch() {
   // to be 'ready'
   this.r_built_linux_x64 = '';
   this.r_built_linux_i386 = '';
-  this.r_built_linux_x64_libc23 = '';
-  this.r_built_linux_x86_libc23 = '';
+  this.r_built_linux_x64_glibc23 = '';
+  this.r_built_linux_x86_glibc23 = '';
   this.r_built_arm = '';
   this.r_built_synology_213 = '';
   this.r_built_ppc = '';

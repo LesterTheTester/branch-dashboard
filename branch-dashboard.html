@@ -6,25 +6,70 @@
 </body>
 
 <template name="home">
-  <h2>Branches</h2>
   {{> branches}}
 </template>
 
 <template name="branches">
-  {{#each branches}}
-    <div class="branch branch-{{branchName}}">
-    <h3>{{branchName}}</h3>
-    <span>{{branchStatus.commitHash}}</span>
-    </div>
+
+  <style>
+  body { background-color: #333; color: white; }
+  .branch { display: block; float: left; width: 300px; min-height: 200px; color: grey; background-color: black; margin: 10px; border: 2px solid black; border-radius: 6px; cursor: pointer; }
+  .branch .branch-title h3 { margin: 0px; font-weight: bold; font-size: 1.5em; }
+  .branch .branch-title { background-color: #777; display: block; text-align: center; color: white; border: 2px solid black; border-radius: 6px; padding: 4px; }
+  .branch.ready .branch-title { background-color: #1B8F00; }
+  .branch.broken .branch-title { background-color: #A94429; }
+  .branch ol { list-style-type: none; margin: 1em; padding: 0; font-weight: bold }
+  </style>
+
+  <!--
+  Displayed branches are inserted in the order of:
+  master, hotfix-*, bugfix-*, release-*, develop, feature-*
+  -->
+
+  {{#with master}}
+    {{> branch}}
+  {{/with}}
+ 
+  {{#each hotfixes}}
+    {{> branch}}
   {{/each}}
+
+  {{#each bugfixes}}
+    {{> branch}}
+  {{/each}}
+
+  {{#each releases}}
+    {{> branch}}
+  {{/each}}
+
+  {{#with develop}}
+    {{> branch}}
+  {{/with}}
+
+  {{#each features}}
+    {{> branch}}
+  {{/each}}
+
 </template>
 
-<template name="one">
-  <a href="/two">Two</a>
-  <a href="/three">Three</a>
-  <a href="/asset.txt">Asset</a>
-</template>
-
-<template name="two">
-  <a href="/">One</a>
+<template name="branch">
+  <div class="branch branch-{{branchName}} {{BranchStatus}}">
+    <div class="branch-title">
+    <h3>{{branchName}}</h3>
+    </div>
+    <ol>
+      <li><small>{{commitHash}}</small></li>
+    </ol>
+    <ol class="status">
+      {{#each failures}} 
+        <li class="text-danger">{{ . }}</li>
+      {{/each}}
+      {{#each unknowns}} 
+        <li class="text-muted">{{ . }}</li>
+      {{/each}}
+      {{#each successes}} 
+        <li class="text-success">{{ . }}</li>
+      {{/each}}
+    </ol>
+  </div>
 </template>

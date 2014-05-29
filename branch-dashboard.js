@@ -73,7 +73,7 @@ Branches = new Meteor.Collection('branches', {
     var mergedBranch = _.extend(newBranch, branch);
 
     // these are not 'mergable' branches
-    if (_.indexOf(['master'], mergedBranch.branchName) != -1) {
+    if (_.indexOf(['master', 'develop'], mergedBranch.branchName) != -1) {
       delete mergedBranch.r_mergeable;
     }
 

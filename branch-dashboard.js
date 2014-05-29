@@ -111,12 +111,8 @@ Router.map(function() {
         Branches.upsert({branchName: branchName}, {$set: requestData});
         response.end('updated:' + branchName);
       } else if (request.method === 'DELETE') {
-	if (_.indexOf(['master', 'develop'], branchName) === -1) {
-          Branches.remove({branchName: branchName});
-          response.end('deleted:' + branchName);
-        } else {
-          response.end('failure:' + branchName + ' protected');
-        }
+        Branches.remove({branchName: branchName});
+        response.end('deleted:' + branchName);
       }
     }
   });

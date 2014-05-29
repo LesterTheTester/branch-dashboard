@@ -24,6 +24,7 @@ function Branch() {
   this.r_built_ppc = '';
   this.r_built_freebsd = '';
   this.r_built_freebsd32 = '';
+  this.r_built_unittests = '';
   this.r_passed_unittests = '';
   this.r_mergeable = '';
   // Concatonated Title Case to denote that
@@ -94,7 +95,7 @@ Router.map(function() {
   });
   this.route('branchAPI', {
     where: 'server',
-    path: '/api/branch/:branchName',
+    path: '/api/branch/:remoteName/:branchName',
     action: function() {
       var request = this.request;
       var response = this.response;

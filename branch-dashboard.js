@@ -26,7 +26,8 @@ function Branch() {
   this.r_built_freebsd32 = '';
   this.r_built_unittests = '';
   this.r_passed_unittests = '';
-  this.r_mergeable = '';
+  //this.r_mergeable = '';
+
   // Concatonated Title Case to denote that
   // this is derived information
   this.BranchStatus = function() {

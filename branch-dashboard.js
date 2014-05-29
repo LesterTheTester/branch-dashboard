@@ -103,6 +103,7 @@ Router.map(function() {
 
       //console.log('request', request);
       //console.log('response', response);
+      //console.log('params', this.params, requestData);
 
       var branchName = this.params.branchName;
 
@@ -110,10 +111,10 @@ Router.map(function() {
 
       if (request.method === 'POST') {
         Branches.upsert({branchName: branchName}, {$set: requestData});
-        response.end('updated:' + branchName);
+        response.end('updated:' + branchName + JSON.stringify(requestData));
       } else if (request.method === 'DELETE') {
         Branches.remove({branchName: branchName});
-        response.end('deleted:' + branchName);
+        response.end('deleted:' + branchName + JSON.stringify(requestData));
       }
     }
   });

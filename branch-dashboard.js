@@ -135,13 +135,13 @@ Router.map(function() {
       response.writeHead(200, {'Content-Type': 'text/html'});
 
       if (request.method === 'POST') {
-        if (requestData['branches']) {
-          var branchesToKeep = requestData.branches.split(',');
+        if (requestData['branchesToKeep']) {
+          var branchesToKeep = requestData.branchesToKeep.split(',');
 
           branchesToKeep.push("master","develop"); //no need to prune these guys
 
           Branches.remove({branchName: { $nin: branchesToKeep }});
-          response.end('set tracked branches:' + JSON.stringify(branches));
+          response.end('set tracked branches:' + JSON.stringify(branchesToKeep));
         }
       }
       response.end('Error!'); //TODO: Return proper Error Code

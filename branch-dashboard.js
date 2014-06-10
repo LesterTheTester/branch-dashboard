@@ -117,6 +117,34 @@ Router.map(function() {
         Branches.remove({branchName: branchName});
         response.end('deleted:' + branchName + JSON.stringify(requestData));
       }
+      response.end('Error!'); //TODO: Return proper Error Code
+    }
+  });
+  this.route('branchesAPI', {
+    where: 'server',
+    path: '/api/branches',
+    action: function() {
+      var request = this.request;
+      var response = this.response;
+      var requestData = this.request.body;
+
+      //console.log('request', request);
+      //console.log('response', response);
+      //console.log('params', this.params, requestData);
+
+      response.writeHead(200, {'Content-Type': 'text/html'});
+
+      if (request.method === 'POST') {
+        if (requestData['branches']) {
+          var branchesToKeep = requestData.branches.split(',');
+
+          branchesToKeep.push("master","develop"); //no need to prune these guys
+
+          Branches.remove({branchName: { $nin: branchesToKeep }});
+          response.end('set tracked branches:' + JSON.stringify(branches));
+        }
+      }
+      response.end('Error!'); //TODO: Return proper Error Code
     }
   });
 })

@@ -26,7 +26,6 @@ function Branch() {
   this.r_built_freebsd32 = '';
   this.r_built_unittests = '';
   this.r_passed_unittests = '';
-  //this.r_mergeable = '';
 
   // Concatonated Title Case to denote that
   // this is derived information
@@ -74,10 +73,9 @@ Branches = new Meteor.Collection('branches', {
     var newBranch = new Branch();
     var mergedBranch = _.extend(newBranch, branch);
 
-    // these are not 'mergable' branches
-    if (_.indexOf(['master', 'develop'], mergedBranch.branchName) != -1) {
-      delete mergedBranch.r_mergeable;
-    }
+    // TODO: This can be removed after some time that
+    // mergeable status aren't on any branch objects
+    delete mergedBranch.r_mergeable;
 
     return mergedBranch;
   }

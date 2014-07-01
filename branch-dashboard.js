@@ -105,6 +105,9 @@ Router.map(function() {
       //console.log('params', this.params, requestData);
 
       var branchName = this.params.branchName;
+      var TSModified = new Date();
+      TSModified = TSModified.toUTCString();
+      requestData.TSModified = TSModified;
 
       response.writeHead(200, {'Content-Type': 'text/html'});
 

@@ -55,6 +55,9 @@
       {{#each failures}} 
         <li class="text-danger">{{ . }}</li>
       {{/each}}
+      {{#each inProgress}} 
+        <li class="text-warning">{{ . }}</li>
+      {{/each}}
       {{#each unknowns}} 
         <li class="text-muted">{{ . }}</li>
       {{/each}}

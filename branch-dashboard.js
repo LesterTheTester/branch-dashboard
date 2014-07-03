@@ -44,6 +44,15 @@ function Branch() {
       return key.substring(0, 2) == "r_";
     });
 
+    var inProgress = [];
+    _.each(this, function(value, key) {
+      // TODO: Definitely want to get some consistency between magic numbers
+      // that mean stuff here and magic strings that get returned :(
+      if (key.substring(0, 2) == "r_" && _.isString(value) && value === "2") {
+        inProgress.push(key);
+      }
+    });
+
     var goodShit = [];
     _.each(this, function(value, key) {
       if (key.substring(0, 2) == "r_" && _.isString(value) && value === "1") {
@@ -57,11 +66,13 @@ function Branch() {
         badShit.push(key);
       }
     });
-    
+ 
     if (goodShit.length == checkedAttributes.length) {
       return 'ready';
     } else if (badShit.length > 0) {
       return 'broken';
+    } else if (inProgress.length > 0) {
+      return 'inProgress';
     } else {
       return 'unknown';
     }
@@ -180,6 +191,16 @@ if (Meteor.isClient) {
         }
       });
       return goodShit.sort();
+    },
+    inProgress: function() {
+      var branch = this;
+      var progressShit = [];
+      _.each(branch, function(value, key) {
+        if (key.substring(0, 2) == "r_" && _.isString(value) && value === "2") {
+          progressShit.push(key.substring(2));
+        }
+      });
+      return progressShit.sort();
     },
     unknowns: function() {
       var branch = this;

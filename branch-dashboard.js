@@ -15,17 +15,16 @@ function Branch() {
   // These are pre-set branch attributes
   // which must be good for the BranchStatus
   // to be 'ready'
-  this.r_built_linux_x64 = '';
-  this.r_built_linux_i386 = '';
-  this.r_built_linux_x64_glibc23 = '';
-  this.r_built_linux_x86_glibc23 = '';
-  this.r_built_arm = '';
-  this.r_built_synology_213 = '';
-  this.r_built_ppc = '';
-  this.r_built_freebsd = '';
-  this.r_built_freebsd32 = '';
-  this.r_built_unittests = '';
-  this.r_passed_unittests = '';
+  this.r_deps = '';
+  this.r_lint = '';
+  this.r_style = '';
+  this.r_mocha = '';
+  this.r_jasmine = '';
+  this.r_smoke = '';
+  this.r_visdiff = '';
+  this.r_selenium = '';
+  this.r_nightwatch = '';
+  this.r_teardown = '';
 
   // Concatonated Title Case to denote that
   // this is derived information
@@ -150,7 +149,7 @@ Router.map(function() {
         if (requestData['branchesToKeep']) {
           var branchesToKeep = requestData.branchesToKeep.split(',');
 
-          branchesToKeep.push("master","develop"); //no need to prune these guys
+          branchesToKeep.push("master"); //no need to prune these guys
 
           Branches.remove({branchName: { $nin: branchesToKeep }});
           response.end('set tracked branches:' + JSON.stringify(branchesToKeep));
@@ -226,30 +225,7 @@ if (Meteor.isClient) {
 
   Template.branches.allBranches = function () {
     return Branches.find({});
-  };
+  }; 
   
-  Template.branches.master = function () {
-    return Branches.findOne({branchName: 'master'});
-  };
-  
-  Template.branches.develop = function () {
-    return Branches.findOne({branchName: 'develop'});
-  };
-
-  Template.branches.features = function () {
-    return Branches.find({branchName: /^feature/});
-  };
-
-  Template.branches.hotfixes = function () {
-    return Branches.find({branchName: /^hotfix/});
-  };
-
-  Template.branches.releases = function () {
-    return Branches.find({branchName: /^release/});
-  };
-
-  Template.branches.bugfixes = function () {
-    return Branches.find({branchName: /^bugfix/});
-  };
 }
 

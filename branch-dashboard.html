@@ -16,27 +16,7 @@
   master, hotfix-*, bugfix-*, release-*, develop, feature-*
   -->
 
-  {{#with master}}
-    {{> branch}}
-  {{/with}}
- 
-  {{#each hotfixes}}
-    {{> branch}}
-  {{/each}}
-
-  {{#each bugfixes}}
-    {{> branch}}
-  {{/each}}
-
-  {{#each releases}}
-    {{> branch}}
-  {{/each}}
-
-  {{#with develop}}
-    {{> branch}}
-  {{/with}}
-
-  {{#each features}}
+  {{#each allBranches}}
     {{> branch}}
   {{/each}}
 
